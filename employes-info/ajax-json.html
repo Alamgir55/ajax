@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ajax and JSON</title>
+    <script>
+        window.onload = function(){
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "http://localhost/ajax/employes-info/employees.json", true);
+            xhr.send();
+            xhr.onreadystatechange = function(){
+                if(xhr.readyState == 4 && xhr.status == 200){
+                    var output = "";
+                    var jsonData = xhr.responseText;
+                    var jsObject = JSON.parse(jsonData);
+                    for(let i = 0; i < jsObject.employees.length; i++){
+                        if(jsObject.employees[i].gender == "F"){
+
+                            output += "<b>Name: </b>" + jsObject.employees[i].name + "<br/><b> Department: </b>" + jsObject.employees[i].department + "<br/><br/>";
+                        }
+                    }
+                    document.getElementById('result').innerHTML = output;
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+        <div id="result"></div>
+</body>
+</html>
