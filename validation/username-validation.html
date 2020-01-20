@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>User Name Validation</title>
+    <style>
+        #signup{
+            border: 2px solid black;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 100px auto;
+            width: 300px;
+            height: 250px;
+        }
+        #message{
+            color: red;
+        }
+    </style>
+    <script>
+        function checkAvailability(){
+            var usnm = document.getElementById('uname').value;
+            var xhrhttp = new XMLHttpRequest();
+            xhrhttp.open("GET", "http://localhost/ajax/validation/username-check.php?username=" + usnm);
+            xhrhttp.send();
+            xhrhttp.onreadystatechange = function(){
+                if(xhrhttp.readyState == 4 && xhrhttp.status == 200){
+                    document.getElementById('message').innerHTML = xhrhttp.responseText;
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <form action="createUser.php" id="signup" method="POST">
+        <label for="fname">Name</label><br>
+        <input type="text" id="fname" placeholder="First" autocomplete="off" />
+        <input type="text" id="lname" placeholder="Last" autocomplete="off"><br><br>
+
+        <label for="uname">Choose Your Username</label><br>
+        <input type="text" id="uname" placeholder="Username" autocomplete="off" onblur="checkAvailability()"><span id="message"></span><br><br>
+
+        <label for="password">Enter a password</label><br>
+        <input type="password" id="password"><br><br>
+        <label for="cnfpass">Confirm your password</label><br>
+        <input type="password" id="cnfpass"><br><br>
+        <input type="submit" value="Create">
+    </form>
+</body>
+</html>
