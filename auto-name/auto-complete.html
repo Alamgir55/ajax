@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Baby Name Suggestion</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style>
+        #container{
+            width: 300px;
+            height: 300px;
+            border: 1px solid black;
+            border-radius: 10px;
+            background: lightblue;
+            margin: 50px auto;
+            padding: 30px;
+        }
+        #names {
+            font-size: 25px;
+            border-radius: 6px;
+            border: 1px solid powderblue;
+            padding: 10px;
+        }
+        #suggestion-list{
+            list-style-type: none;
+            margin-top: -3px;
+            margin-left: -33px;
+            width: 200px;
+        }
+        #suggestion-list li {
+            background: lightsteelblue;
+            border-bottom: 1px solid steelblue;
+            padding: 10px;
+            font-size: 23px;
+        }
+        #suggestion-list li:hover {
+            cursor: pointer;
+            background: aliceblue;
+        }
+    </style>
+    <script>
+        $(document).ready(function(){
+            $('#names').keyup(function(){
+                $.ajax({
+                    url: "http://localhost/ajax/auto-name/baby-names.php", 
+                    data: "starting=" + $(this).val(),
+                    success: function(data){
+                        $('#result').html(data);
+                    }
+                })
+            });
+        });
+        function displayName(name){
+            $("#names").val(name);
+            $("#suggestion-list").hide();
+        }
+    </script>
+</head>
+<body>
+    <div id="container">
+        <input type="text" id="names" placeholder="Baby Names" autocomplete="off">
+        <div id="result"></div>
+    </div>
+    
+</body>
+</html>
